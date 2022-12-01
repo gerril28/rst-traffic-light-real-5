@@ -26,17 +26,18 @@ input.onButtonPressed(Button.A, function () {
             . . . . .
             `)
         basic.showIcon(IconNames.No)
-        basic.pause(500)
+        basic.pause(100)
     }
     basic.showIcon(IconNames.No)
-    GREEN()
+    basic.pause(500)
     for (let index = 0; index < 15; index++) {
+        GREEN()
         basic.pause(1000)
         green += -1
         basic.showString("" + (green))
     }
-    YELLOW()
     for (let index = 0; index < 2; index++) {
+        YELLOW()
         basic.pause(1000)
         pedestrian += -1
         basic.showString("" + (pedestrian))
@@ -59,8 +60,50 @@ function GREEN () {
     range.showColor(neopixel.colors(NeoPixelColors.Green))
 }
 input.onButtonPressed(Button.B, function () {
+    music.playMelody("C5 C5 C5 C5 A A B B ", 500)
     RED()
-    basic.pause(1000)
+    for (let index = 0; index < 5; index++) {
+        basic.showLeds(`
+            # . # . .
+            # # # # #
+            . . # . #
+            . # . # .
+            # . . . #
+            `)
+        basic.showLeds(`
+            . . # . #
+            # # # # #
+            # . # . .
+            . # . # .
+            # . . . #
+            `)
+    }
+    for (let index = 0; index < 5; index++) {
+        basic.showIcon(IconNames.No)
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            . . . . .
+            . . . . .
+            . . . . .
+            `)
+        basic.showIcon(IconNames.No)
+        basic.pause(100)
+    }
+    basic.showIcon(IconNames.No)
+    basic.pause(500)
+    for (let index = 0; index < 15; index++) {
+        GREEN()
+        basic.pause(1000)
+        green += -1
+        basic.showString("" + (green))
+    }
+    for (let index = 0; index < 2; index++) {
+        YELLOW()
+        basic.pause(1000)
+        pedestrian += -1
+        basic.showString("" + (pedestrian))
+    }
 })
 function YELLOW () {
     range = strip.range(0, 1)
@@ -75,7 +118,7 @@ let range: neopixel.Strip = null
 let pedestrian = 0
 let green = 0
 let strip: neopixel.Strip = null
-strip = neopixel.create(DigitalPin.P4, 4, NeoPixelMode.RGB)
+strip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
 strip.setBrightness(20)
 let yellow = 2
 green = 15
@@ -88,4 +131,5 @@ basic.forever(function () {
     pins.digitalWritePin(DigitalPin.P1, 0)
     distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 58
     basic.pause(2000)
+    basic.showNumber(distance)
 })

@@ -15,9 +15,6 @@ input.onButtonPressed(Button.A, function () {
             . # . # .
             # . . . #
             `)
-        basic.showNumber(pedestrian)
-        pedestrian += -1
-        basic.pause(1000)
     }
     for (let index = 0; index < 5; index++) {
         basic.showIcon(IconNames.No)
@@ -31,6 +28,7 @@ input.onButtonPressed(Button.A, function () {
         basic.showIcon(IconNames.No)
         basic.pause(500)
     }
+    basic.showIcon(IconNames.No)
     GREEN()
     for (let index = 0; index < 15; index++) {
         basic.pause(1000)
@@ -72,6 +70,7 @@ function YELLOW () {
     range = strip.range(2, 1)
     range.showColor(neopixel.colors(NeoPixelColors.Black))
 }
+let distance = 0
 let range: neopixel.Strip = null
 let pedestrian = 0
 let green = 0
@@ -82,5 +81,11 @@ let yellow = 2
 green = 15
 pedestrian = 5
 basic.forever(function () {
-	
+    pins.digitalWritePin(DigitalPin.P1, 0)
+    control.waitMicros(2)
+    pins.digitalWritePin(DigitalPin.P1, 1)
+    control.waitMicros(10)
+    pins.digitalWritePin(DigitalPin.P1, 0)
+    distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 58
+    basic.pause(2000)
 })

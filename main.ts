@@ -1,3 +1,49 @@
+function Traffic_Light () {
+    RED()
+    for (let index = 0; index < 5; index++) {
+        basic.showLeds(`
+            # . # . .
+            # # # # #
+            . . # . #
+            . # . # .
+            # . . . #
+            `)
+        basic.showLeds(`
+            . . # . #
+            # # # # #
+            # . # . .
+            . # . # .
+            # . . . #
+            `)
+    }
+    for (let index = 0; index < 5; index++) {
+        basic.showIcon(IconNames.No)
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            . . . . .
+            . . . . .
+            . . . . .
+            `)
+        basic.pause(100)
+    }
+    for (let index = 0; index < 5; index++) {
+        pedestrian += -1
+        basic.showString("" + (pedestrian))
+    }
+    for (let index = 0; index < 15; index++) {
+        GREEN()
+        basic.pause(1000)
+        green += -1
+        basic.showString("" + (green))
+    }
+    for (let index = 0; index < 2; index++) {
+        YELLOW()
+        basic.pause(1000)
+        pedestrian += -1
+        basic.showString("" + (pedestrian))
+    }
+}
 input.onButtonPressed(Button.A, function () {
     RED()
     for (let index = 0; index < 5; index++) {
@@ -25,11 +71,12 @@ input.onButtonPressed(Button.A, function () {
             . . . . .
             . . . . .
             `)
-        basic.showIcon(IconNames.No)
         basic.pause(100)
     }
-    basic.showIcon(IconNames.No)
-    basic.pause(500)
+    for (let index = 0; index < 5; index++) {
+        pedestrian += -1
+        basic.showString("" + (pedestrian))
+    }
     for (let index = 0; index < 15; index++) {
         GREEN()
         basic.pause(1000)
@@ -59,6 +106,9 @@ function GREEN () {
     range = strip.range(2, 1)
     range.showColor(neopixel.colors(NeoPixelColors.Green))
 }
+input.onButtonPressed(Button.AB, function () {
+    control.reset()
+})
 input.onButtonPressed(Button.B, function () {
     music.playMelody("C5 C5 C5 C5 A A B B ", 500)
     RED()
@@ -78,20 +128,20 @@ input.onButtonPressed(Button.B, function () {
             # . . . #
             `)
     }
-    for (let index = 0; index < 5; index++) {
-        basic.showIcon(IconNames.No)
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            `)
-        basic.showIcon(IconNames.No)
-        basic.pause(100)
-    }
+    music.playMelody("- C5 C5 C5 - C5 C5 C5 ", 500)
     basic.showIcon(IconNames.No)
-    basic.pause(500)
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        . . . . .
+        `)
+    basic.pause(1000)
+    for (let index = 0; index < 5; index++) {
+        pedestrian += -1
+        basic.showString("" + (pedestrian))
+    }
     for (let index = 0; index < 15; index++) {
         GREEN()
         basic.pause(1000)
@@ -130,6 +180,8 @@ basic.forever(function () {
     control.waitMicros(10)
     pins.digitalWritePin(DigitalPin.P1, 0)
     distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 58
-    basic.pause(2000)
-    basic.showNumber(distance)
+    if (distance == 5) {
+        Traffic_Light()
+        basic.pause(2000)
+    }
 })

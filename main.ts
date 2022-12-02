@@ -128,19 +128,22 @@ input.onButtonPressed(Button.B, function () {
             # . . . #
             `)
     }
-    music.playMelody("- C5 C5 C5 - C5 C5 C5 ", 500)
-    basic.showIcon(IconNames.No)
-    basic.showLeds(`
-        . . . . .
-        . . . . .
-        . . . . .
-        . . . . .
-        . . . . .
-        `)
-    basic.pause(1000)
     for (let index = 0; index < 5; index++) {
+        music.playMelody("- C5 C5 C5 - C5 C5 C5 ", 500)
+        basic.showIcon(IconNames.No)
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            . . . . .
+            . . . . .
+            . . . . .
+            `)
+        basic.pause(1000)
         pedestrian += -1
         basic.showString("" + (pedestrian))
+    }
+    for (let index = 0; index < 5; index++) {
+    	
     }
     for (let index = 0; index < 15; index++) {
         GREEN()

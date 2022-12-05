@@ -86,8 +86,8 @@ input.onButtonPressed(Button.A, function () {
     for (let index = 0; index < 2; index++) {
         YELLOW()
         basic.pause(1000)
-        pedestrian += -1
-        basic.showString("" + (pedestrian))
+        yellow_light += -1
+        basic.showString("" + (yellow_light))
     }
 })
 function RED () {
@@ -139,11 +139,10 @@ input.onButtonPressed(Button.B, function () {
             . . . . .
             `)
         basic.pause(1000)
-        pedestrian += -1
-        basic.showString("" + (pedestrian))
     }
     for (let index = 0; index < 5; index++) {
-    	
+        pedestrian += -1
+        basic.showString("" + (pedestrian))
     }
     for (let index = 0; index < 15; index++) {
         GREEN()
@@ -154,8 +153,8 @@ input.onButtonPressed(Button.B, function () {
     for (let index = 0; index < 2; index++) {
         YELLOW()
         basic.pause(1000)
-        pedestrian += -1
-        basic.showString("" + (pedestrian))
+        yellow_light += -1
+        basic.showString("" + (yellow_light))
     }
 })
 function YELLOW () {
@@ -168,14 +167,17 @@ function YELLOW () {
 }
 let distance = 0
 let range: neopixel.Strip = null
+let yellow_light = 0
 let pedestrian = 0
 let green = 0
 let strip: neopixel.Strip = null
+radio.setGroup(39)
 strip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
 strip.setBrightness(20)
 let yellow = 2
 green = 15
 pedestrian = 5
+yellow_light = 2
 basic.forever(function () {
     pins.digitalWritePin(DigitalPin.P1, 0)
     control.waitMicros(2)
@@ -183,7 +185,7 @@ basic.forever(function () {
     control.waitMicros(10)
     pins.digitalWritePin(DigitalPin.P1, 0)
     distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 58
-    if (distance == 5) {
+    if (distance < 5) {
         Traffic_Light()
         basic.pause(2000)
     }

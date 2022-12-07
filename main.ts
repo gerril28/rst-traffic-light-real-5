@@ -1,8 +1,29 @@
+radio.onReceivedNumber(function (receivedNumber) {
+    if (receivedNumber == 1) {
+        control.reset()
+        GREEN()
+    } else {
+        control.reset()
+        RED()
+    }
+})
 function Traffic_Light () {
+    for (let index = 0; index < 15; index++) {
+        GREEN()
+        basic.pause(1000)
+        green += -1
+        basic.showString("" + (green))
+    }
+    for (let index = 0; index < 2; index++) {
+        YELLOW()
+        basic.pause(1000)
+        yellow_light += -1
+        basic.showString("" + (yellow_light))
+    }
     RED()
     for (let index = 0; index < 5; index++) {
         basic.showLeds(`
-            # . # . .
+            # . # . #
             # # # # #
             . . # . #
             . # . # .
@@ -31,18 +52,7 @@ function Traffic_Light () {
         pedestrian += -1
         basic.showString("" + (pedestrian))
     }
-    for (let index = 0; index < 15; index++) {
-        GREEN()
-        basic.pause(1000)
-        green += -1
-        basic.showString("" + (green))
-    }
-    for (let index = 0; index < 2; index++) {
-        YELLOW()
-        basic.pause(1000)
-        pedestrian += -1
-        basic.showString("" + (pedestrian))
-    }
+    control.reset()
 }
 input.onButtonPressed(Button.A, function () {
     RED()
@@ -131,13 +141,6 @@ input.onButtonPressed(Button.B, function () {
     for (let index = 0; index < 5; index++) {
         music.playMelody("- C5 C5 C5 - C5 C5 C5 ", 500)
         basic.showIcon(IconNames.No)
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            `)
         basic.pause(1000)
     }
     for (let index = 0; index < 5; index++) {
@@ -174,7 +177,6 @@ let strip: neopixel.Strip = null
 radio.setGroup(39)
 strip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
 strip.setBrightness(20)
-let yellow = 2
 green = 15
 pedestrian = 5
 yellow_light = 2

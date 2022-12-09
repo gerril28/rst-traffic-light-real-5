@@ -7,56 +7,13 @@ radio.onReceivedNumber(function (receivedNumber) {
         RED()
     }
 })
-function Traffic_Light () {
-    for (let index = 0; index < 15; index++) {
-        GREEN()
-        basic.pause(1000)
-        green += -1
-        basic.showString("" + (green))
-    }
-    for (let index = 0; index < 2; index++) {
-        YELLOW()
-        basic.pause(1000)
-        yellow_light += -1
-        basic.showString("" + (yellow_light))
-    }
-    RED()
-    for (let index = 0; index < 5; index++) {
-        basic.showLeds(`
-            # . # . #
-            # # # # #
-            . . # . #
-            . # . # .
-            # . . . #
-            `)
-        basic.showLeds(`
-            . . # . #
-            # # # # #
-            # . # . .
-            . # . # .
-            # . . . #
-            `)
-    }
-    for (let index = 0; index < 5; index++) {
-        basic.showIcon(IconNames.No)
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            `)
-        basic.pause(100)
-    }
-    for (let index = 0; index < 5; index++) {
-        pedestrian += -1
-        basic.showString("" + (pedestrian))
-    }
-    control.reset()
+function Sensor () {
+	
 }
 input.onButtonPressed(Button.A, function () {
     RED()
-    for (let index = 0; index < 5; index++) {
+    basic.pause(5000)
+    for (let index = 0; index < 10; index++) {
         basic.showLeds(`
             # . # . .
             # # # # #
@@ -71,34 +28,26 @@ input.onButtonPressed(Button.A, function () {
             . # . # .
             # . . . #
             `)
+    }
+    basic.pause(1000)
+    for (let index = 0; index < 10; index++) {
+        basic.showString("" + (pedestrian))
+        pedestrian += -1
     }
     for (let index = 0; index < 5; index++) {
         basic.showIcon(IconNames.No)
-        basic.showLeds(`
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            . . . . .
-            `)
-        basic.pause(100)
     }
+    basic.pause(2000)
     for (let index = 0; index < 5; index++) {
-        pedestrian += -1
-        basic.showString("" + (pedestrian))
-    }
-    for (let index = 0; index < 15; index++) {
         GREEN()
-        basic.pause(1000)
-        green += -1
-        basic.showString("" + (green))
+        basic.pause(5000)
     }
     for (let index = 0; index < 2; index++) {
         YELLOW()
-        basic.pause(1000)
-        yellow_light += -1
-        basic.showString("" + (yellow_light))
+        basic.pause(2000)
     }
+    basic.pause(200)
+    RED()
 })
 function RED () {
     range = strip.range(0, 1)
@@ -120,9 +69,10 @@ input.onButtonPressed(Button.AB, function () {
     control.reset()
 })
 input.onButtonPressed(Button.B, function () {
-    music.playMelody("C5 C5 C5 C5 A A B B ", 500)
     RED()
-    for (let index = 0; index < 5; index++) {
+    basic.pause(5000)
+    for (let index = 0; index < 10; index++) {
+        music.playMelody("C5 C5 C5 C5 A A B B ", 500)
         basic.showLeds(`
             # . # . .
             # # # # #
@@ -138,28 +88,63 @@ input.onButtonPressed(Button.B, function () {
             # . . . #
             `)
     }
-    for (let index = 0; index < 5; index++) {
+    basic.pause(1000)
+    for (let index = 0; index < 10; index++) {
         music.playMelody("- C5 C5 C5 - C5 C5 C5 ", 500)
-        basic.showIcon(IconNames.No)
-        basic.pause(1000)
+        basic.showString("" + (pedestrian))
+        pedestrian += -1
     }
     for (let index = 0; index < 5; index++) {
-        pedestrian += -1
-        basic.showString("" + (pedestrian))
+        basic.showIcon(IconNames.No)
     }
-    for (let index = 0; index < 15; index++) {
+    basic.pause(2000)
+    for (let index = 0; index < 5; index++) {
         GREEN()
-        basic.pause(1000)
-        green += -1
-        basic.showString("" + (green))
+        basic.pause(5000)
     }
     for (let index = 0; index < 2; index++) {
         YELLOW()
-        basic.pause(1000)
-        yellow_light += -1
-        basic.showString("" + (yellow_light))
+        basic.pause(2000)
     }
+    basic.pause(200)
+    RED()
 })
+function trafficlightreal () {
+    GREEN()
+    basic.pause(5000)
+    for (let index = 0; index < 2; index++) {
+        YELLOW()
+        basic.pause(2000)
+    }
+    basic.pause(200)
+    RED()
+    basic.pause(5000)
+    for (let index = 0; index < 10; index++) {
+        basic.showLeds(`
+            # . # . .
+            # # # # #
+            . . # . #
+            . # . # .
+            # . . . #
+            `)
+        basic.showLeds(`
+            . . # . #
+            # # # # #
+            # . # . .
+            . # . # .
+            # . . . #
+            `)
+    }
+    basic.pause(1000)
+    for (let index = 0; index < 10; index++) {
+        basic.showString("" + (pedestrian))
+        pedestrian += -1
+    }
+    for (let index = 0; index < 5; index++) {
+        basic.showIcon(IconNames.No)
+    }
+    basic.pause(2000)
+}
 function YELLOW () {
     range = strip.range(0, 1)
     range.showColor(neopixel.colors(NeoPixelColors.Black))
@@ -170,16 +155,17 @@ function YELLOW () {
 }
 let distance = 0
 let range: neopixel.Strip = null
-let yellow_light = 0
 let pedestrian = 0
-let green = 0
 let strip: neopixel.Strip = null
+basic.showIcon(IconNames.No)
 radio.setGroup(39)
-strip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
+strip = neopixel.create(DigitalPin.P16, 3, NeoPixelMode.RGB)
 strip.setBrightness(20)
-green = 15
-pedestrian = 5
-yellow_light = 2
+let Counter = 0
+let green = 15
+pedestrian = 10
+let yellow_light = 2
+RED()
 basic.forever(function () {
     pins.digitalWritePin(DigitalPin.P1, 0)
     control.waitMicros(2)
@@ -188,7 +174,8 @@ basic.forever(function () {
     pins.digitalWritePin(DigitalPin.P1, 0)
     distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 58
     if (distance < 5) {
-        Traffic_Light()
-        basic.pause(2000)
+        Counter += 1
+    } else if (Counter == 4) {
+        trafficlightreal()
     }
 })

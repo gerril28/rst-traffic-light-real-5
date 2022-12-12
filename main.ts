@@ -39,13 +39,13 @@ function trafficlightreal2 () {
         GREEN()
         basic.pause(1000)
     }
-    for (let index = 0; index < 5; index++) {
-        RED()
-        basic.pause(1000)
-    }
     for (let index = 0; index < 2; index++) {
         YELLOW()
         basic.pause(2000)
+    }
+    for (let index = 0; index < 5; index++) {
+        RED()
+        basic.pause(1000)
     }
 }
 input.onButtonPressed(Button.A, function () {
@@ -110,8 +110,8 @@ input.onButtonPressed(Button.AB, function () {
 input.onButtonPressed(Button.B, function () {
     RED()
     basic.pause(5000)
-    music.playMelody("C5 C5 C5 C5 A A B B ", 500)
     for (let index = 0; index < 10; index++) {
+        music.playMelody("C5 C5 C5 C5 A A B B ", 500)
         basic.showLeds(`
             # . # . .
             # # # # #
@@ -126,6 +126,7 @@ input.onButtonPressed(Button.B, function () {
             . # . # .
             # . . . #
             `)
+        basic.pause(200)
     }
     basic.pause(1000)
     for (let index = 0; index < 10; index++) {
@@ -212,8 +213,8 @@ RED()
 basic.forever(function () {
     Sensor()
     if (distance < 5) {
-        trafficlightreal()
-    } else if (Counter < 3) {
-        phantom()
+        Counter += 1
+    } else if (Counter == 4) {
+        trafficlightreal2()
     }
 })

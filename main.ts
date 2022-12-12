@@ -12,6 +12,7 @@ function Sensor () {
     control.waitMicros(10)
     pins.digitalWritePin(DigitalPin.P1, 0)
     distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 58
+    basic.pause(2000)
 }
 function phantom () {
     GREEN()
@@ -214,7 +215,9 @@ basic.forever(function () {
     Sensor()
     if (distance < 5) {
         Counter += 1
+        basic.showString("" + (distance))
     } else if (Counter == 4) {
         trafficlightreal2()
+        basic.showString("" + (Counter))
     }
 })
